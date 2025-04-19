@@ -44,6 +44,7 @@ ENV/
 .DS_Store
 
 Trained_models/
+Trained_models/*pkl
 results/
 
 *.pdf

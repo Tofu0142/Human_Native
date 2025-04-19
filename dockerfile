@@ -20,8 +20,8 @@ COPY pyproject.toml poetry.lock* /app/
 # Configure poetry to not use a virtual environment
 RUN poetry config virtualenvs.create false
 
-# Install dependencies (using --without-dev instead of --no-dev)
-RUN poetry install --without dev --no-interaction --no-ansi
+# Install dependencies (using --without dev and --no-root)
+RUN poetry install --without dev --no-root --no-interaction --no-ansi
 
 # copy project files
 COPY App/app.py /app/
@@ -31,6 +31,9 @@ RUN mkdir -p /app/Trained_models
 
 # copy model files
 COPY Trained_models/pii_detector_model_bert /app/Trained_models/pii_detector_model_bert
+
+# Copy README.md (optional, but good to have)
+COPY README.md /app/
 
 # expose port
 EXPOSE 8000
