@@ -76,6 +76,13 @@ curl -X 'POST' \
   "text": "My email is john.doe@example.com and my phone is 555-123-4567"
 }'
 ```
+### Interactive API Documentation
+FastAPI automatically generates interactive API documentation:
+1. Open a web browser
+2. Navigate to http://localhost:8000/docs
+3. You'll see the Swagger UI where you can explore and test all endpoints
+
+
 
 ## Development
 
@@ -102,9 +109,37 @@ curl -X 'POST' \
 poetry run pytest
 ```
 
-## Model Information
+## Data Generation and Training
+The models were trained on a synthetic dataset generated to include various types of PII:
+1. Data Generation: We used a custom data generation pipeline to create realistic text samples with and without PII
+2. Training Process:
+    - Random Forest: Trained on feature-engineered text data + TF-IDF + Rule-based detection
+    - BERT: Fine-tuned on raw text with binary labels
+3. Model Selection:
+    After evaluation, we selected the BERT model for its higher accuracy and performance in identifying common PII types.
+### Model Comparison
+Our evaluation shows the performance comparison between the Random Forest and BERT models:
+| Metric | Random Forest | BERT |
+|--------|--------------|------|
+| Accuracy | 0.943000 | 1.000000 |
+| Precision | 0.873503 | 1.000000 |
+| Recall | 0.951876 | 1.000000 |
+| F1 Score | 0.911007 | 1.000000 |
+| AUC | 0.985578 | 1.000000 |
+| Inference Time | 32.590107 | 29.393385 |
 
-The PII detection model is a fine-tuned BERT model trained on a diverse dataset of text containing various types of PII. The model is optimized for accuracy and performance in identifying common PII types.
+The BERT model provides higher accuracy and with lower inference time, so we selected the BERT model for the API.
+
+## Assumptions and Design Decisions
+1. Dual Model Approach: We implemented both a deep learning model (BERT) and a traditional ML model (Random Forest) to provide options for different use cases.
+2. Binary Classification: The models perform binary classification (PII/No PII) rather than multi-class classification of specific PII types.
+3. Confidence Score: The API returns a confidence score to allow users to set their own thresholds for PII detection.
+4. Stateless API: The API is designed to be stateless, making it easy to scale horizontally.
+5. Docker Deployment: The solution is containerized for easy deployment in various environments.
+6. No Persistent Storage: The API doesn't store any of the processed text, ensuring privacy.
+7. Performance Optimization: The models are loaded once at startup to minimize inference time.
+8. Error Handling: The API includes robust error handling for empty texts and other edge cases. 
+
 
 ## License
 
