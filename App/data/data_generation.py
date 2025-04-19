@@ -1,7 +1,7 @@
 import pandas as pd
 from faker import Faker
 import random
-from data_class import Dataset, Data
+from ..sources.data_class import Dataset, Data
 
 # Generate fake training data
 fake = Faker()

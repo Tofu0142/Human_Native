@@ -43,8 +43,7 @@ ENV/
 # OS specific
 .DS_Store
 
-pii_detector_model/
+Trained_models/
 results/
-
 
 *.pdf
