@@ -140,6 +140,18 @@ The BERT model provides higher accuracy and with lower inference time, so we sel
 7. Performance Optimization: The models are loaded once at startup to minimize inference time.
 8. Error Handling: The API includes robust error handling for empty texts and other edge cases. 
 
+##Future Work and Considerations
+### Model Architecture and Performance
+1. Hybrid Inference Strategy: Implement a cascading approach where the faster Random Forest model performs initial screening, and the more accurate BERT model only processes uncertain cases.
+2. Model Optimization: Explore model quantization, distillation, or smaller pre-trained models like DistilBERT to reduce model size and improve inference speed.
+### Data and Training Strategies
+1. Synthetic Data Limitations: While our models perform excellently on synthetic data, real-world text may present additional challenges. Consider generating more diverse synthetic data or incorporating real-world examples.
+2. Class Imbalance: Evaluate and address potential class imbalance issues using techniques like oversampling, undersampling, or weighted loss functions.
+### Monitoring and Continuous Improvement
+1. Model Performance Monitoring: Implement systems to track key metrics over time and design feedback mechanisms for users to report false positives/negatives.
+2. A/B Testing Framework: Design a framework to safely introduce model improvements by comparing multiple model versions simultaneously.
+### Extended Application Scenarios
+1. Multilingual Support: Explore multilingual BERT models or language-specific models to support PII detection across different languages.
 
 ## License
 
